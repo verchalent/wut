@@ -39,22 +39,19 @@ def main():
     console = Console()
     debug = lambda text: console.print(f"wut | {text}") if args.debug else None
 
-    with console.status("[bold green]Trying my best..."):
-        # Ensure environment is set up correctly
-        if not os.environ.get("TMUX") and not os.environ.get("STY"):
-            console.print(
-                "[bold red]wut must be run inside a tmux or screen session.[/bold red]"
-            )
-            return
-        if (
-            not os.environ.get("OPENAI_API_KEY", None)
-            and not os.environ.get("ANTHROPIC_API_KEY", None)
-            and not os.environ.get("OLLAMA_MODEL", None)
-        ):
-            console.print(
-                "[bold red]Please set your OpenAI or Anthropic API key in your environment variables. Or, alternatively, specify an Ollama model name.[/bold red]"
-            )
-            return
+    # Ensure environment is set up correctly
+    if not os.environ.get("TMUX") and not os.environ.get("STY")and not os.environ.get("ZELLIJ"):
+        console.print(
+            "[bold red]wut must be run inside a tmux, screen or Zellij session.[/bold red]"
+        )
+        return
+    if not os.environ.get("OPENAI_API_KEY", None) and not os.environ.get(
+        "ANTHROPIC_API_KEY", None
+    ):
+        console.print(
+            "[bold red]Please set your OpenAI or Anthropic API key in your environment variables.[/bold red]"
+        )
+        return
 
         # Gather context
         shell = get_shell()

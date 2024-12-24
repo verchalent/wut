@@ -134,6 +134,9 @@ def get_pane_output() -> str:
             elif os.getenv("STY"):  # screen session
                 cmd = ["screen", "-X", "hardcopy", "-h", output_file]
                 check_output(cmd, text=True)
+            elif os.getenv("ZELLIJ"):  # Zellij session
+                cmd = ["zellij", "action dump-screen", output_file]
+                check_output(cmd, text=True)
             else:
                 return ""
 
