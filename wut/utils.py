@@ -135,8 +135,8 @@ def get_pane_output() -> str:
                 cmd = ["screen", "-X", "hardcopy", "-h", output_file]
                 check_output(cmd, text=True)
             elif os.getenv("ZELLIJ"):  # Zellij session
-                cmd = ["zellij", "zellij action dump-screen", output_file]
-                check_output(cmd, text=True)
+                cmd = "zellij action dump-screen {0}".format(output_file)
+                os.system(cmd) #subprocess does not dump current pane output. This is a workaround.
             else:
                 return ""
 
